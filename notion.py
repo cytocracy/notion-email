@@ -13,7 +13,7 @@ token = os.getenv("NOTION_TOKEN")
 
 notion = Client(auth=token)
 
-TOMORROW = False
+TOMORROW = True
 
 def get_message():
     return "Here is the rehearsal call for today!\n\n" + '<font="Courier">' + get_call() + '</font>'
@@ -39,7 +39,7 @@ def get_call():
         }
     )
     if len(response["results"]) == 0:
-        return "No rehearsal call for tomorrow! :) :)"
+        raise Exception("no call")
     # print (response[0]["properties"]["Name"]["title"][0]["plain_text"])
     for i in response["results"]:
 
