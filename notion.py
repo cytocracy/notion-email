@@ -44,17 +44,35 @@ def get_call():
     for i in response["results"]:
 
         info = "Rehearsal: "
-        name = i['properties']['Name']["title"][0]["plain_text"]
-        info += name + '\nDate: '
+        name = i['properties']['Name']["title"]
+        
+        
+        if len(name) != 0:
+            name = name[0]["plain_text"]
+            info += name
+        info += '\nDate: '
+        
+
         date = i['properties']['Date']['date']['start']
         date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
         info += date + '\nCalled: '
-        called = i['properties']['Called']['rich_text'][0]['plain_text']
-        info += called + '\nTime: '
-        time = i['properties']['Time']['rich_text'][0]['plain_text']
-        info += time + '\nNotes: '
-        notes = i['properties']['Notes']['rich_text'][0]['plain_text']
-        info += notes + '\n'
+        called = i['properties']['Called']['rich_text']
+        if len(called) != 0:
+            called = called[0]['plain_text']
+            info += called
+        info += '\nTime: '
+
+        time = i['properties']['Time']['rich_text']
+        if len(time) != 0:
+            time = time[0]['plain_text']
+            info += time
+        info += '\nNotes: '
+
+        notes = i['properties']['Notes']['rich_text']
+        if len(notes) != 0:
+            notes = notes[0]['plain_text']
+            info += notes
+        info += '\n'
 
         return info
         
