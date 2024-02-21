@@ -29,16 +29,22 @@ s = smtplib.SMTP('smtp.gmail.com', 587)
 s.starttls()
 s.login(email, password)
 
-body = "Here is the rehearsal call for tomorrow!\n\n" + notion.get_call() + "\n" + signoff + ",\nTheo"
+call = notion.get_call()
+# call_list = call.splitlines()
 
+body = "Here is the rehearsal call for tomorrow!<br><br>" +  '<font face="Courier New, Courier, monospace">' + notion.get_call().replace("\n", "<br>") + "</font>"
+link = MIMEText("<br><b>Week at a Glace: " + '<a href="https://theoparker.notion.site/6e08eaffba374dd9a1786c66ca3845fb?v=45a78417f24e4681851c7ed282836123&pvs=4">here</a></b>', 'html') 
+sign = "\n\n" + signoff + ",\nTheo"
 
 message = MIMEMultipart()
-message["Subject"] = "Test2"
+message["Subject"] = "Tomorrow's Rehearsal Call"
 message['To'] = ', '.join(to)
 message["Cc"] = ', '.join(recip)
 message["From"] = email
 
-message.attach(MIMEText(body, "plain"))
+message.attach(MIMEText(body, "html"))
+message.attach(link)
+message.attach(MIMEText(sign, "plain"))
 s.sendmail(email, recip, message.as_string())
 
 s.quit()
