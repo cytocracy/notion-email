@@ -12,6 +12,9 @@ email = os.getenv("EMAIL_FROM")
 password = os.getenv("EMAIL_PW")
 # print(password)
 
+RANDOM_SIGNOFF = False
+
+
 print()
 
 with open("/home/theop/notion-email/recipients.txt", "r") as f:
@@ -23,21 +26,21 @@ with open("/home/theop/notion-email/to.txt", "r") as f:
 with open("/home/theop/notion-email/signoffs.txt", "r") as f:
     signoffs = f.read().splitlines()
 
-signoff = random.choice(signoffs)
+signoff = random.choice(signoffs) if RANDOM_SIGNOFF else "Welcome to the Renaissance"
 
 s = smtplib.SMTP('smtp.gmail.com', 587)
 s.starttls()
 s.login(email, password)
 
-call = notion.get_call()
+call, date = notion.get_call()
 # call_list = call.splitlines()
 
-body = "Here is the rehearsal call for tomorrow!<br><br>" +  '<font face="Courier New, Courier, monospace">' + notion.get_call().replace("\n", "<br>") + "</font>"
+body = "Here is the rehearsal call for tomorrow!<br><br>" +  '<font face="Courier New, Courier, monospace">' + call.replace("\n", "<br>") + "</font>"
 link = MIMEText("<br><b>Week at a Glance: " + '<a href="https://theoparker.notion.site/6e08eaffba374dd9a1786c66ca3845fb?v=45a78417f24e4681851c7ed282836123&pvs=4">here</a></b>', 'html') 
 sign = "\n\n" + signoff + ",\nTheo"
 
 message = MIMEMultipart()
-message["Subject"] = "Tomorrow's Rehearsal Call"
+message["Subject"] = "Something Rotten Rehearsal - " + date
 message['To'] = ', '.join(to)
 message["Cc"] = ', '.join(recip)
 message["From"] = email

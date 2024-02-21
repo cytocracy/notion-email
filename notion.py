@@ -19,14 +19,13 @@ def get_message():
     return "Here is the rehearsal call for today!\n\n" + '<font="Courier">' + get_call() + '</font>'
 
 
-
-
-
 def get_call():
     #get iso 8601 date for tomorrow
     tomorrow = datetime.date.today()
     if TOMORROW:
         tomorrow += datetime.timedelta(days=1)
+    
+    
     
 
     response = notion.databases.query(
@@ -74,7 +73,7 @@ def get_call():
             info += notes
         info += '\n'
 
-        return info
+        return info, tomorrow.strftime("%m/%d")
         
         
-print(get_call())
+print(get_call()[0])
