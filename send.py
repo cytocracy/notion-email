@@ -8,9 +8,9 @@ import random
 
 load_dotenv()
 email = os.getenv("EMAIL_FROM")
-print(email)
+# print(email)
 password = os.getenv("EMAIL_PW")
-print(password)
+# print(password)
 
 print()
 
