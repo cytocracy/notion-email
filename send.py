@@ -14,13 +14,13 @@ print(password)
 
 print()
 
-with open("recipients.txt", "r") as f:
+with open("/home/theop/notion-email/recipients.txt", "r") as f:
     recip = f.read().splitlines()
 
-with open("to.txt", "r") as f:
+with open("/home/theop/notion-email/to.txt", "r") as f:
     to = f.read().splitlines()
 
-with open("signoffs.txt", "r") as f:
+with open("/home/theop/notion-email/signoffs.txt", "r") as f:
     signoffs = f.read().splitlines()
 
 signoff = random.choice(signoffs)
