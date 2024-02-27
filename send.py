@@ -12,7 +12,7 @@ email = os.getenv("EMAIL_FROM")
 password = os.getenv("EMAIL_PW")
 # print(password)
 
-RANDOM_SIGNOFF = False
+RANDOM_SIGNOFF = True
 
 
 print()
